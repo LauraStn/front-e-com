@@ -1,7 +1,7 @@
 import { LoginProps, RegisterProps } from "@/utils/types";
 import axios from "axios";
 
-export async function register(user: RegisterProps) {
+export async function registerUser(user: RegisterProps) {
   const url = `${process.env.NEXT_PUBLIC_API_URL}auth/signup`;
 
   const axiosConfig = {
