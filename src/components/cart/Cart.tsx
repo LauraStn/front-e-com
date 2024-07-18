@@ -14,10 +14,8 @@ const Cart = () => {
     });
     // getMyCart().then((res) => {
     //   setCart(res.data);
-    //   console.log(res.data);
     // });
   }, [setCart]);
-  console.log(cart);
   // return (
   //   <div className="h-full pt-20">
   //     <h2 className="mb-10 text-center text-2xl font-bold">

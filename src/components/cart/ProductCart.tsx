@@ -1,20 +1,21 @@
 import { removeOneProduct } from "@/services/cart";
 import { CartItemProps, ProductProps } from "@/utils/types";
+import { useRouter } from "next/navigation";
 import React, { useEffect } from "react";
 import toast from "react-hot-toast";
 import { IoTrashOutline } from "react-icons/io5";
 
 const ProductCart = ({ cartItem }: { cartItem: CartItemProps }) => {
   const id = cartItem.id;
- 
-
+  const router = useRouter();
   const removeItem = async () => {
     await removeOneProduct(id).then((res) => {
       toast.success(res.data.msg);
+      // router.push('/myapp/cart', {scroll: false})
     });
   };
   return (
-    <div className="justify-between text-black mb-6 rounded-lg bg-white p-6 shadow-md sm:flex sm:justify-start">
+    <div className="justify-between h-60 text-black mb-6 rounded-lg bg-white p-6 shadow-md sm:flex sm:justify-start">
       <img
         src={`http://localhost:3000/image/view/${cartItem.product.image}`}
         alt={cartItem.product.name}
@@ -48,11 +49,7 @@ const ProductCart = ({ cartItem }: { cartItem: CartItemProps }) => {
             </span>
           </div>
           <div className="flex items-center space-x-4">
-            <button
-              onClick={() => {
-                removeItem();
-              }}
-            >
+            <button onClick={removeItem}>
               <IoTrashOutline className="cursor-pointer" />
             </button>
             {/* <p className="text-sm">259.000 ₭</p> */}
