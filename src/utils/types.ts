@@ -16,7 +16,7 @@ export type LoginProps = {
 export type ProductProps = {
   categoryId: string;
   description: string;
-  id?: string;
+  id: string;
   image: string;
   name: string;
   price: number;
@@ -50,4 +50,15 @@ export type CartItemProps = {
   price: number;
   quantity: number;
   product: ProductProps;
+};
+
+
+export type CreateProductProps = {
+  categoryId: string;
+  description: string;
+  image: string;
+  file?: File[]
+  name: string;
+  price: number;
+  stock: number;
 };

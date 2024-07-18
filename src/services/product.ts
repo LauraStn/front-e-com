@@ -1,4 +1,4 @@
-import { ProductProps } from "@/utils/types";
+import { CreateProductProps, ProductProps } from "@/utils/types";
 import axios from "axios";
 
 export async function getAllProducts() {
@@ -36,8 +36,25 @@ export async function getOneProduct(id: string) {
       return e;
     });
 }
+export async function uploadImage(formData: FormData) {
+  const url = `${process.env.NEXT_PUBLIC_API_URL}image/upload`;
 
-export async function createProduct(product: ProductProps) {
+  const axiosConfig = {
+    headers: {
+      "content-type": "multipart/form-data",
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+    },
+  };
+  return axios
+    .post(url, formData, axiosConfig)
+    .then((res) => {
+      return res;
+    })
+    .catch((e) => {
+      return e;
+    });
+}
+export async function createProduct(product: CreateProductProps) {
   const url = `${process.env.NEXT_PUBLIC_API_URL}product/add`;
 
   const axiosConfig = {
@@ -48,6 +65,25 @@ export async function createProduct(product: ProductProps) {
   };
   return axios
     .post(url, product, axiosConfig)
+    .then((res) => {
+      return res;
+    })
+    .catch((e) => {
+      return e;
+    });
+}
+
+export async function deleteProduct(id: string) {
+  const url = `${process.env.NEXT_PUBLIC_API_URL}product/delete/${id}`;
+
+  const axiosConfig = {
+    headers: {
+      "content-type": "application/json",
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+    },
+  };
+  return axios
+    .delete(url, axiosConfig)
     .then((res) => {
       return res;
     })

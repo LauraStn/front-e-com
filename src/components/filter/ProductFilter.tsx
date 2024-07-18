@@ -24,6 +24,7 @@ import {
 import { CategoryProps } from "@/utils/types";
 import { getAllCategory, getOneCategory } from "@/services/category";
 import FilterCheckbox from "./FilterCheckbox";
+import FilterRadio from "./FilterRadio";
 
 const sortOptions = [
   { name: "Most Popular", href: "#", current: true },
@@ -299,11 +300,12 @@ export default function Example({
                         {categoryList &&
                           categoryList.map((option) => (
                             <Fragment key={option.id}>
-                              <FilterCheckbox
+                              {/* <FilterCheckbox
                                 value={option.id}
                                 label={option.name}
                                 checked={false}
-                              />
+                              /> */}
+                              <FilterRadio value={option.id} label={option.name}/>
                             </Fragment>
                             // <div key={option.value} className="flex items-center">
                             //   <input
