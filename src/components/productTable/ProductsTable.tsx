@@ -21,11 +21,10 @@ const ProductsTable = () => {
   return (
     <div className="bg-white shadow rounded-lg p-4 mb-4 sm:p-6 xl:p-8 ">
       <div className="mb-4 flex items-center justify-between">
-        <div>
+        <div className="flex justify-between items-center w-full">
           <h3 className="text-xl font-bold text-gray-900 mb-2">All Products</h3>
           <span className="text-base font-normal text-gray-500">
             <CreateProductModal />
-            {/* This is a list of all crypto selling by users */}
           </span>
         </div>
       </div>

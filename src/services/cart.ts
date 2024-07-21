@@ -76,3 +76,21 @@ export async function removeOneProduct(id: string) {
     });
 }
 
+export async function removeAllProducts() {
+  const url = `${process.env.NEXT_PUBLIC_API_URL}cart/clearCart`;
+
+  const axiosConfig = {
+    headers: {
+      "content-type": "application/json",
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+    },
+  };
+  return axios
+    .delete(url, axiosConfig)
+    .then((res) => {
+      return res;
+    })
+    .catch((e) => {
+      return e;
+    });
+}

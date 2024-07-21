@@ -1,8 +1,14 @@
 import React, { Fragment, useContext, useEffect, useState } from "react";
 import ProductCart from "./ProductCart";
-import { getAllCartProducts, getMyCart } from "@/services/cart";
+import {
+  getAllCartProducts,
+  getMyCart,
+  removeAllProducts,
+} from "@/services/cart";
 import { CartItemProps } from "@/utils/types";
 import { CartContext } from "@/context/cartContext";
+import { IoTrashOutline } from "react-icons/io5";
+import toast from "react-hot-toast";
 
 const Cart = () => {
   const { cart, setCart } = useContext(CartContext);
@@ -16,6 +22,12 @@ const Cart = () => {
     //   setCart(res.data);
     // });
   }, [setCart]);
+  const removeItem = async () => {
+    await removeAllProducts().then((res) => {
+      toast.success(res.data.msg);
+      window.location.reload()
+    });
+  };
   // return (
   //   <div className="h-full pt-20">
   //     <h2 className="mb-10 text-center text-2xl font-bold">
@@ -59,9 +71,13 @@ const Cart = () => {
                 />
               </Fragment>
             ))}
-         
         </div>
         <div className="mt-6 h-full rounded-lg border bg-white p-6 shadow-md md:mt-0 md:w-1/3">
+          <button
+          onClick={removeItem} 
+           className="flex gap-3 items-center mb-6 px-5 rounded-md bg-red-500 py-1.5 font-medium text-blue-50 hover:bg-red-600">
+            clear cart <IoTrashOutline className="cursor-pointer" />
+          </button>
           <div className="mb-2 flex justify-between">
             <p className="text-gray-700">Quantity of products</p>
             <p className="text-gray-700">{cart && cart.totalQuantity}</p>

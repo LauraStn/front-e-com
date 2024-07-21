@@ -3,6 +3,7 @@ import { ProductProps } from "@/utils/types";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
+import { MdOutlineKeyboardDoubleArrowRight } from "react-icons/md";
 
 const ProductCard = (product: ProductProps) => {
 
@@ -30,10 +31,10 @@ const ProductCard = (product: ProductProps) => {
               ${product.price}
             </h1>
             <Link
-              className="px-3 py-2 bg-gray-800 text-white text-xs font-bold uppercase rounded"
+              className="px-3 py-2 bg-blue-800 text-white text-xs font-bold flex items-center gap-2 uppercase"
               href={`/myapp/product/${product.id}`}
             >
-              See more
+            <MdOutlineKeyboardDoubleArrowRight/>  See more
             </Link>
           </div>
         </div>

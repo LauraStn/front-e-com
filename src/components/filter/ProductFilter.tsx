@@ -131,7 +131,7 @@ export default function Example({
               <form className="mt-4 border-t border-gray-200">
                 <h3 className="sr-only">Categories</h3>
                 <ul role="list" className="px-2 py-3 font-medium text-gray-900">
-                  {/* {subCategories.map((category) => (
+                  {/* {categoryList && categoryList.map((category) => (
                     <li key={category.name}>
                       <a href={category.href} className="block px-2 py-3">
                         {category.name}
@@ -165,6 +165,16 @@ export default function Example({
                     </h3>
                     <DisclosurePanel className="pt-6">
                       <div className="space-y-6">
+                      {categoryList &&
+                          categoryList.map((option) => (
+                            <Fragment key={option.id}>
+                              <FilterRadio
+                                value={option.id}
+                                label={option.name}
+                              />
+                            </Fragment>
+                            
+                          ))}
                         {/* {categoryList && categoryList.map((option) => (<Fragment key={option.id}>
                           <FilterCheckbox value={option.id} label={option.name} checked={false}/></Fragment>
                           // <div key={option.value} className="flex items-center">
@@ -300,29 +310,12 @@ export default function Example({
                         {categoryList &&
                           categoryList.map((option) => (
                             <Fragment key={option.id}>
-                              {/* <FilterCheckbox
+                              <FilterRadio
                                 value={option.id}
                                 label={option.name}
-                                checked={false}
-                              /> */}
-                              <FilterRadio value={option.id} label={option.name}/>
+                              />
                             </Fragment>
-                            // <div key={option.value} className="flex items-center">
-                            //   <input
-                            //     defaultValue={option.value}
-                            //     defaultChecked={option.checked}
-                            //     id={`filter-mobile-${section.id}-${optionIdx}`}
-                            //     name={`${section.id}[]`}
-                            //     type="checkbox"
-                            //     className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
-                            //   />
-                            //   <label
-                            //     htmlFor={`filter-mobile-${section.id}-${optionIdx}`}
-                            //     className="ml-3 min-w-0 flex-1 text-gray-500"
-                            //   >
-                            //     {option.label}
-                            //   </label>
-                            // </div>
+                            
                           ))}
                       </div>
                     </DisclosurePanel>

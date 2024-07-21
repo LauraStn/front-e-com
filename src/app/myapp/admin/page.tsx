@@ -1,12 +1,14 @@
-import ProductsTable from '@/components/productTable/ProductsTable'
-import React from 'react'
+import ProductsTable from "@/components/productTable/ProductsTable";
+import UsersTable from "@/components/userTable/UserTable";
+import React from "react";
 
 const page = () => {
   return (
     <div>
-      <ProductsTable/>
+      <ProductsTable />
+      <UsersTable />
     </div>
-  )
-}
+  );
+};
 
-export default page
+export default page;

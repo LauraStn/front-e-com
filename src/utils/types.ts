@@ -44,6 +44,10 @@ export type CategoryProps = {
   name: string;
 };
 
+export type CreateOrUpdateCategoryProps = {
+  name: string;
+};
+
 export type CartItemProps = {
   id: string;
   cartId: string;
@@ -52,13 +56,29 @@ export type CartItemProps = {
   product: ProductProps;
 };
 
-
 export type CreateProductProps = {
   categoryId: string;
   description: string;
   image: string;
-  file?: File[]
+  file?: File[];
   name: string;
   price: number;
   stock: number;
+};
+
+export type UpdateProductProps = {
+  name: string;
+  stock: number;
+  price: number;
+  description: string;
+};
+
+export type UserProps = {
+  email: string;
+  firstName: string;
+  id: string;
+  lastName: string;
+  orders: [];
+  pseudo: string;
+  isActive: boolean;
 };
