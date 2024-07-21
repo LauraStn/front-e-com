@@ -40,7 +40,6 @@ export async function getOneUser() {
 
 export async function banUser(id: string) {
   const url = `${process.env.NEXT_PUBLIC_API_URL}user/ban`;
-  console.log(id);
 
   const axiosConfig = {
     headers: {
@@ -52,12 +51,10 @@ export async function banUser(id: string) {
   return axios
     .patch(url, { id: id }, axiosConfig)
     .then((res) => {
-      console.log(res);
 
       return res;
     })
     .catch((e) => {
-      console.log(e);
 
       return e;
     });

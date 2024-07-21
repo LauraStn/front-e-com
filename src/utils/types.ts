@@ -82,3 +82,7 @@ export type UserProps = {
   pseudo: string;
   isActive: boolean;
 };
+
+export type CreateCategoryProps = {
+  name: string
+}

@@ -25,7 +25,6 @@ const DeleteUserModal = ({ user }: { user: UserProps }) => {
   function HandleDeleteUser() {
     deleteUser(userId)
       .then((res) => {
-        console.log(res);
 
         // if (res.status !== undefined) {
         //   handleClose();

@@ -10,7 +10,6 @@ const UsersTable = () => {
   useEffect(() => {
     getAllUsers()
       .then((res) => {
-        console.log(res);
 
         setUserList(res.data);
       })

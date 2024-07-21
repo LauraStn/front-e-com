@@ -1,12 +1,12 @@
 import { ErrorMsg } from "@/components/error/Error";
-import { updateProduct } from "@/services/product";
-import { ProductProps } from "@/utils/types";
-import { Box, Modal, Tooltip } from "@mui/material";
-import React, { useEffect, useState } from "react";
-import { SubmitHandler, useForm } from "react-hook-form";
+import { updateCategory } from "@/services/category";
+import { CategoryProps, CreateCategoryProps } from "@/utils/types";
+import { Tooltip, Modal, Box } from "@mui/material";
+import React, { useState } from "react";
+import { useForm, SubmitHandler } from "react-hook-form";
 import toast from "react-hot-toast";
 
-const UpdateProductModal = ({ product }: { product: ProductProps }) => {
+const UpdateCategoryModal = ({ category }: { category: CategoryProps }) => {
   const style = {
     position: "absolute" as "absolute",
     top: "50%",
@@ -25,18 +25,20 @@ const UpdateProductModal = ({ product }: { product: ProductProps }) => {
     handleSubmit,
     watch,
     formState: { errors },
-  } = useForm<ProductProps>();
+  } = useForm<CreateCategoryProps>();
 
-  const onSubmit: SubmitHandler<ProductProps> = (data) =>
-    updateProduct(product.id, data)
+  const onSubmit: SubmitHandler<CreateCategoryProps> = (data) =>
+    updateCategory(category.id, data)
       .then((res) => {
-        if (res.status !== undefined) {
-          toast.success("Product Updated !");
+        console.log(res);
+
+        if (res.status === 200) {
           handleClose();
+          toast.success("Category Updated !");
           return;
         } else {
-          toast.error(res.response.data.message);
           handleClose();
+          toast.error(res.response.data.message[0]);
         }
       })
       .catch((e) => toast.error(e));
@@ -88,65 +90,11 @@ const UpdateProductModal = ({ product }: { product: ProductProps }) => {
                 <input
                   type="text"
                   id="name"
-                  defaultValue={product.name}
+                  defaultValue={category.name}
                   className="w-full px-3 dark:text-black dark:bg-white py-2 rounded-md border border-gray-300 dark:border-gray-700 focus:outline-none focus:ring-1 focus:ring-blue-500"
                   {...register("name", { required: true })}
                 />
                 {errors.name && <ErrorMsg error={"Name"} />}
-              </div>
-              <div className="flex items-start flex-col justify-start">
-                <label
-                  htmlFor="description"
-                  className="text-sm text-gray-700 dark:text-black mr-2"
-                >
-                  Description:
-                </label>
-                <input
-                  type="text"
-                  id="description"
-                  defaultValue={product.description}
-                  className="w-full px-3 dark:text-black dark:bg-white py-2 rounded-md border border-gray-300 dark:border-gray-700 focus:outline-none focus:ring-1 focus:ring-blue-500"
-                  {...register("description", {
-                    required: true,
-                  })}
-                />{" "}
-                {errors.description && <ErrorMsg error={"Value"} />}
-              </div>
-              <div className="flex items-start flex-col justify-start">
-                <label
-                  htmlFor="stock"
-                  className="text-sm text-gray-700 dark:text-black mr-2"
-                >
-                  stock:
-                </label>
-                <input
-                  type="number"
-                  id="stock"
-                  defaultValue={product.stock}
-                  className="w-full px-3 dark:text-black dark:bg-white py-2 rounded-md border border-gray-300 dark:border-gray-700 focus:outline-none focus:ring-1 focus:ring-blue-500"
-                  {...register("stock", {
-                    valueAsNumber: true,
-                    required: true,
-                  })}
-                />
-                {errors.stock && <ErrorMsg error={"stock"} />}
-              </div>
-              <div className="flex items-start flex-col justify-start">
-                <label
-                  htmlFor="price"
-                  className="text-sm text-gray-700 dark:text-black mr-2"
-                >
-                  Price:
-                </label>
-                <input
-                  id="price"
-                  defaultValue={product.price}
-                  className="w-full px-3 dark:text-black dark:bg-white py-2 rounded-md border border-gray-300 dark:border-gray-700 focus:outline-none focus:ring-1 focus:ring-blue-500"
-                  {...register("price", {
-                    valueAsNumber: true,
-                  })}
-                />
-                {errors.price && <ErrorMsg error={"price"} />}
               </div>
 
               <div className="flex items-center">
@@ -170,4 +118,4 @@ const UpdateProductModal = ({ product }: { product: ProductProps }) => {
   );
 };
 
-export default UpdateProductModal;
+export default UpdateCategoryModal;

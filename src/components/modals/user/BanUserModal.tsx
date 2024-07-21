@@ -22,12 +22,9 @@ const BanUserModal = ({ user }: { user: UserProps }) => {
   const handleClose = () => setOpen(false);
 
   async function Handleban() {
-    // const BanOneUser = await banUser(userId);
-    // console.log(BanOneUser);
 
     banUser(userId)
       .then((res) => {
-        console.log(res);
 
         toast.error(res.response.data.message[0]);
         handleClose();
