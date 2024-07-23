@@ -43,7 +43,7 @@ const UpdateProductModal = ({ product }: { product: ProductProps }) => {
 
   return (
     <div>
-      <Tooltip title="Edit this offer">
+      <Tooltip title="Update this product">
         <button
           onClick={handleOpen}
           className="w-4 mr-2 transform hover:text-purple-500 hover:scale-110"

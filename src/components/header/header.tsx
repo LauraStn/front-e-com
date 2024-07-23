@@ -23,7 +23,7 @@ const Header = () => {
   useEffect(() => {
     setAdmin(isAdmin);
     setIsConnect(isConnected);
-  }, []);
+  }, [isConnected]);
 
   const logout = () => {
     localStorage.removeItem("token");

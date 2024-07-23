@@ -44,7 +44,6 @@ const ProductsRow = ({ product }: { product: ProductProps }) => {
           </div>
         ) : (
           <div className="flex item-center justify-center">
-            {/* <BuyOfferModal offer={offer} /> */}
           </div>
         )}
       </td>

@@ -4,8 +4,10 @@ import React from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import { ErrorMsg } from "../error/Error";
+import { useRouter } from "next/navigation";
 
 const RegisterForm = () => {
+  const { push } = useRouter();
   const {
     register,
     handleSubmit,
@@ -18,8 +20,9 @@ const RegisterForm = () => {
       .then((res: any) => {
         if (res.status === 201) {
           toast.success(res.data);
+          push("/myapp");
         } else {
-          toast.error(res.response.data.message[0]);
+          toast.error(res.response.data.message);
         }
       })
       .catch((e) => toast.error(e));
@@ -27,7 +30,6 @@ const RegisterForm = () => {
     <div className="w-screen pb-8 bg-white">
       <div className="flex justify-center container mx-auto my-auto h-full items-center flex-col">
         <div className="text-slate-400 items-center">
-          
           <div className="text-center pb-3">Create an account!</div>
         </div>
 
@@ -35,9 +37,8 @@ const RegisterForm = () => {
           onSubmit={handleSubmit(onSubmit)}
           className="m-auto md:w-2/4 lg:w-1/3 text-slate-700 flex flex-col items-center bg-white shadow-[0_3px_10px_rgb(0,0,0,0.2)] rounded-md pt-12"
         >
-          <div className="w-3/4 mb-6">{errors.email && (
-              <ErrorMsg error={"The field email is required"} />
-            )}
+          <div className="w-3/4 mb-6">
+            {errors.email && <ErrorMsg error={"The field email is required"} />}
             <input
               type="email"
               id="email"
@@ -46,7 +47,8 @@ const RegisterForm = () => {
               {...register("email", { required: true })}
             />
           </div>
-          <div className="w-3/4 mb-6">{errors.pseudo && (
+          <div className="w-3/4 mb-6">
+            {errors.pseudo && (
               <ErrorMsg error={"The field pseudo is required"} />
             )}
             <input
@@ -57,7 +59,8 @@ const RegisterForm = () => {
               {...register("pseudo", { required: true })}
             />
           </div>
-          <div className="w-3/4 mb-6">{errors.firstName && (
+          <div className="w-3/4 mb-6">
+            {errors.firstName && (
               <ErrorMsg error={"The field first name is require"} />
             )}
             <input
@@ -81,7 +84,8 @@ const RegisterForm = () => {
               {...register("lastName", { required: true })}
             />
           </div>
-          <div className="w-3/4 mb-6">{errors.password && (
+          <div className="w-3/4 mb-6">
+            {errors.password && (
               <ErrorMsg error={"The field password is required"} />
             )}
             <input
@@ -123,7 +127,6 @@ const RegisterForm = () => {
             />
           </div>
           <div className="w-3/4 mb-6">
-           
             <div className="text-right ">
               <p className="text-xs text-slate-400">
                 Already have an account?
@@ -136,9 +139,7 @@ const RegisterForm = () => {
               </p>
             </div>
           </div>
-         
         </form>
-       
       </div>
     </div>
   );
