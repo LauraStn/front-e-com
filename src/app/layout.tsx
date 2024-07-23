@@ -22,7 +22,7 @@ export default async function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={inter.className + "bg-gray-100"}>
+      <body className={inter.className + "bg-gray-100 "}>
         <Toaster position="bottom-center" reverseOrder={false} />
         {children}
       </body>

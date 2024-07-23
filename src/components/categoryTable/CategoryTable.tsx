@@ -23,7 +23,7 @@ const CategoryTable = () => {
   }, []);
 
   return (
-    <div className="bg-white w-1/3 shadow rounded-lg p-4 mb-4 sm:p-6 xl:p-8 ">
+    <div className="bg-white lg:w-2/4 shadow rounded-lg p-4 mb-4 sm:p-6 xl:p-8 ">
       <div className="mb-4 flex items-center justify-between">
         <div className="flex justify-between items-center w-full">
           <h3 className="text-xl font-bold text-gray-900 mb-2">All Category</h3>
@@ -46,9 +46,7 @@ const CategoryTable = () => {
                 categoryList?.map((item) => {
                   return (
                     <Fragment key={item.id}>
-                      <CategoriesRow
-                        category={item}
-                      />
+                      <CategoriesRow category={item} />
                     </Fragment>
                   );
                 })}

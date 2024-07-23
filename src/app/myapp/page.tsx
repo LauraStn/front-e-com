@@ -6,8 +6,8 @@ import React, { useEffect } from "react";
 const page = () => {
   return (
     <>
-      {/* <Carousel />
-      <UsersTable/> */}
+    
+      <Carousel />
     </>
   );
 };

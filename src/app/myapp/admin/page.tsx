@@ -5,10 +5,12 @@ import React from "react";
 
 const page = () => {
   return (
-    <div>
+    <div className="flex flex-col">
       <ProductsTable />
-      <UsersTable />
-      <CategoryTable/>
+      <div className="flex flex-col justify-between lg:flex-row gap-2">
+        <UsersTable />
+        <CategoryTable />
+      </div>
     </div>
   );
 };

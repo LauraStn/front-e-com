@@ -33,20 +33,21 @@ const ProductCart = ({ cartItem }: { cartItem: CartItemProps }) => {
         </div>
         <div className="mt-4 flex justify-between im sm:space-y-6 sm:mt-0 sm:block sm:space-x-6">
           <div className="flex items-center border-gray-100">
-            <span className="cursor-pointer rounded-l bg-gray-100 py-1 px-3.5 duration-100 hover:bg-blue-500 hover:text-blue-50">
+            {/* <span className="cursor-pointer rounded-l bg-gray-100 py-1 px-3.5 duration-100 hover:bg-blue-500 hover:text-blue-50">
               {" "}
               -{" "}
-            </span>
-            <input
+            </span> */}
+            <p>Quantity: {cartItem.quantity} </p>
+            {/* <input
               className="h-8 w-8 border bg-white text-center text-xs outline-none"
               type="number"
               defaultValue={cartItem.quantity}
               min="1"
-            />
-            <span className="cursor-pointer rounded-r bg-gray-100 py-1 px-3 duration-100 hover:bg-blue-500 hover:text-blue-50">
+            /> */}
+            {/* <span className="cursor-pointer rounded-r bg-gray-100 py-1 px-3 duration-100 hover:bg-blue-500 hover:text-blue-50">
               {" "}
               +{" "}
-            </span>
+            </span> */}
           </div>
           <div className="flex items-center space-x-4">
             <button onClick={removeItem}>

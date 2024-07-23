@@ -1,6 +1,6 @@
 "use client";
 
-import { Fragment, useEffect, useState } from "react";
+import { ChangeEvent, Fragment, useEffect, useState } from "react";
 import {
   Dialog,
   DialogBackdrop,
@@ -25,6 +25,7 @@ import { CategoryProps } from "@/utils/types";
 import { getAllCategory, getOneCategory } from "@/services/category";
 import FilterCheckbox from "./FilterCheckbox";
 import FilterRadio from "./FilterRadio";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
 const sortOptions = [
   { name: "Most Popular", href: "#", current: true },
@@ -33,26 +34,8 @@ const sortOptions = [
   { name: "Price: Low to High", href: "#", current: false },
   { name: "Price: High to Low", href: "#", current: false },
 ];
-// const subCategories = [
-//   { name: 'Totes', href: '#' },
-//   { name: 'Backpacks', href: '#' },
-//   { name: 'Travel Bags', href: '#' },
-//   { name: 'Hip Bags', href: '#' },
-//   { name: 'Laptop Sleeves', href: '#' },
 // ]
 const filters = [
-  // {
-  //   id: 'color',
-  //   name: 'Color',
-  //   options: [
-  //     { value: 'white', label: 'White', checked: false },
-  //     { value: 'beige', label: 'Beige', checked: false },
-  //     { value: 'blue', label: 'Blue', checked: true },
-  //     { value: 'brown', label: 'Brown', checked: false },
-  //     { value: 'green', label: 'Green', checked: false },
-  //     { value: 'purple', label: 'Purple', checked: false },
-  //   ],
-  // },
   {
     id: "category",
     name: "Category",
@@ -64,18 +47,6 @@ const filters = [
       { value: "accessories", label: "Accessories", checked: false },
     ],
   },
-  // {
-  //   id: 'size',
-  //   name: 'Size',
-  //   options: [
-  //     { value: '2l', label: '2L', checked: false },
-  //     { value: '6l', label: '6L', checked: false },
-  //     { value: '12l', label: '12L', checked: false },
-  //     { value: '18l', label: '18L', checked: false },
-  //     { value: '20l', label: '20L', checked: false },
-  //     { value: '40l', label: '40L', checked: true },
-  //   ],
-  // },
 ];
 
 function classNames(...classes: any[]) {
@@ -89,12 +60,54 @@ export default function Example({
 }>) {
   const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
   const [categoryList, setCategoryList] = useState<CategoryProps[]>();
-
   useEffect(() => {
     getAllCategory().then((res) => {
       setCategoryList(res.data);
     });
   }, []);
+  const searchParams = useSearchParams();
+  const router = useRouter();
+  const pathname = usePathname();
+  const category = searchParams.get("category");
+
+  const addSearchParams = (name: string, value: string | number) => {
+    // const newSearchParams = new URLSearchParams(searchParams);
+    const newSearchParams = new URLSearchParams(
+      Array.from(searchParams.entries())
+    );
+    newSearchParams.append(name, value.toString());
+    router.push(`${pathname}?${newSearchParams.toString()}`, {
+      scroll: false,
+    });
+  };
+  const changeSearchParams = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const entries = Array.from(searchParams.entries());
+    const newSearchParams = new URLSearchParams(entries);
+    newSearchParams.set("category", event.target.value);
+    router.push(`${pathname}?${newSearchParams.toString()}`, {
+      scroll: false,
+    });
+  };
+  const deleteSearchParams = (name: string, value: string) => {
+    const newSearchParams = new URLSearchParams(searchParams);
+
+    if (name === undefined) {
+      router.push(`${pathname}`);
+      return;
+    }
+    newSearchParams.delete(name, value);
+    router.push(`${pathname}?${newSearchParams.toString()}`, {
+      scroll: false,
+    });
+  };
+
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (event.target.checked) {
+      addSearchParams(event.target.name, event.target.value);
+    } else {
+      deleteSearchParams(event.target.name, event.target.value);
+    }
+  };
 
   return (
     <div className="bg-white h-full">
@@ -165,35 +178,16 @@ export default function Example({
                     </h3>
                     <DisclosurePanel className="pt-6">
                       <div className="space-y-6">
-                      {categoryList &&
+                        {categoryList &&
                           categoryList.map((option) => (
                             <Fragment key={option.id}>
                               <FilterRadio
-                                value={option.id}
+                                value={option.name}
                                 label={option.name}
+                                handleChange={changeSearchParams}
                               />
                             </Fragment>
-                            
                           ))}
-                        {/* {categoryList && categoryList.map((option) => (<Fragment key={option.id}>
-                          <FilterCheckbox value={option.id} label={option.name} checked={false}/></Fragment>
-                          // <div key={option.value} className="flex items-center">
-                          //   <input
-                          //     defaultValue={option.value}
-                          //     defaultChecked={option.checked}
-                          //     id={`filter-mobile-${section.id}-${optionIdx}`}
-                          //     name={`${section.id}[]`}
-                          //     type="checkbox"
-                          //     className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
-                          //   />
-                          //   <label
-                          //     htmlFor={`filter-mobile-${section.id}-${optionIdx}`}
-                          //     className="ml-3 min-w-0 flex-1 text-gray-500"
-                          //   >
-                          //     {option.label}
-                          //   </label>
-                          // </div>
-                        ))} */}
                       </div>
                     </DisclosurePanel>
                   </Disclosure>
@@ -206,11 +200,11 @@ export default function Example({
         <main className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="flex items-baseline justify-between border-b border-gray-200 pb-6 pt-24">
             <h1 className="text-4xl font-bold tracking-tight text-gray-900">
-              New Arrivals
+              All products
             </h1>
 
             <div className="flex items-center">
-              <Menu as="div" className="relative inline-block text-left">
+              {/* <Menu as="div" className="relative inline-block text-left">
                 <div>
                   <MenuButton className="group inline-flex justify-center text-sm font-medium text-gray-700 hover:text-gray-900">
                     Sort
@@ -243,15 +237,15 @@ export default function Example({
                     ))}
                   </div>
                 </MenuItems>
-              </Menu>
-
+              </Menu> */}
+              {/* 
               <button
                 type="button"
                 className="-m-2 ml-5 p-2 text-gray-400 hover:text-gray-500 sm:ml-7"
               >
                 <span className="sr-only">View grid</span>
                 <Squares2X2Icon aria-hidden="true" className="h-5 w-5" />
-              </button>
+              </button> */}
               <button
                 type="button"
                 onClick={() => setMobileFiltersOpen(true)}
@@ -313,9 +307,9 @@ export default function Example({
                               <FilterRadio
                                 value={option.id}
                                 label={option.name}
+                                handleChange={changeSearchParams}
                               />
                             </Fragment>
-                            
                           ))}
                       </div>
                     </DisclosurePanel>
@@ -324,7 +318,7 @@ export default function Example({
               </form>
 
               {/* Product grid */}
-              <div className="lg:col-span-3 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+              <div className="lg:col-span-3 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 m-auto">
                 {children}
               </div>
             </div>

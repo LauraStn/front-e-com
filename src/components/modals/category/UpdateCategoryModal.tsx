@@ -78,7 +78,7 @@ const UpdateCategoryModal = ({ category }: { category: CategoryProps }) => {
               className="w-full flex flex-col gap-3"
             >
               <h1 className="text-xl font-bold text-center text-gray-700 dark:text-black">
-                Udpate product
+                Udpate category
               </h1>
               <div className="flex items-start flex-col justify-start">
                 <label

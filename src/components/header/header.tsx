@@ -7,12 +7,19 @@ import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import React, { useContext, useEffect, useState } from "react";
+import { Burger } from "../menuBurger/Burger";
+import classNames from "classnames";
+import { useIsMobile } from "@/utils/UseIsMobile";
 
 const Header = () => {
   const { push } = useRouter();
   const { cart, setCart } = useContext(CartContext);
   const [connect, setIsConnect] = useState(false);
   const [admin, setAdmin] = useState(false);
+  const [isOpen, setIsOpen] = useState<boolean>(false);
+
+  const isMobile = useIsMobile();
+
   useEffect(() => {
     setAdmin(isAdmin);
     setIsConnect(isConnected);
@@ -25,16 +32,40 @@ const Header = () => {
     push("/myapp");
   };
   return (
-    <header className="header sticky top-0 bg-[#53AC47] text-white  shadow-md flex items-center justify-between">
-      <Image
-        src={"/images/micro.png"}
-        alt=""
-        width={600}
-        height={66}
-        className="h-full md:w-1/3"
-      ></Image>
+    <header
+      className={classNames(
+        "header z-50 sticky top-0 text-white shadow-md flex items-center justify-between",
+        {
+          "bg-[#53AC47]": !isMobile,
+          "bg-[#104E9D]": isMobile,
+        }
+      )}
+    >
+      {isMobile ? (
+        <Image
+          src={"/images/logo-mobile.png"}
+          alt=""
+          width={100}
+          height={66}
+          className="h-full"
+        ></Image>
+      ) : (
+        <Image
+          src={"/images/micro.png"}
+          alt=""
+          width={600}
+          height={66}
+          className="h-full md:w-1/3"
+        ></Image>
+      )}
 
-      <nav className="nav font-semibold text-lg">
+      <Burger isOpen={isOpen} setIsOpen={setIsOpen} />
+      <nav
+        className={classNames("nav font-semibold text-lg", {
+          hidden: !isOpen && isMobile,
+          block: !isMobile || isOpen,
+        })}
+      >
         <ul className="flex items-center">
           <li className="p-4 border-b-2 border-blue-800 border-opacity-0 hover:border-opacity-100 hover:text-blue-800 duration-200 cursor-pointer active">
             <a href="/myapp">Home</a>
@@ -60,7 +91,12 @@ const Header = () => {
         </ul>
       </nav>
 
-      <div className="w-3/12 flex justify-end pr-4">
+      <div
+        className={classNames("w-3/12 flex justify-end pr-4", {
+          hidden: !isOpen && isMobile,
+          block: !isMobile || isOpen,
+        })}
+      >
         {admin ? (
           <Tooltip title={"Go to manage dashboard "}>
             <a className="" href="/myapp/admin">
