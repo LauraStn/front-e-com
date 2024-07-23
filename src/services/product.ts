@@ -1,4 +1,8 @@
-import { CreateProductProps, ProductProps } from "@/utils/types";
+import {
+  CreateProductProps,
+  ProductProps,
+  UpdateProductProps,
+} from "@/utils/types";
 import axios from "axios";
 
 export async function getAllProducts() {
@@ -65,6 +69,25 @@ export async function createProduct(product: CreateProductProps) {
   };
   return axios
     .post(url, product, axiosConfig)
+    .then((res) => {
+      return res;
+    })
+    .catch((e) => {
+      return e;
+    });
+}
+
+export async function updateProduct(id: string, product: UpdateProductProps) {
+  const url = `${process.env.NEXT_PUBLIC_API_URL}product/update/${id}`;
+
+  const axiosConfig = {
+    headers: {
+      "content-type": "application/json",
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+    },
+  };
+  return axios
+    .patch(url, product, axiosConfig)
     .then((res) => {
       return res;
     })

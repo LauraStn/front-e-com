@@ -1,3 +1,5 @@
+import { ErrorMsg } from "@/components/error/Error";
+import { updateProduct } from "@/services/product";
 import { ProductProps } from "@/utils/types";
 import { Box, Modal, Tooltip } from "@mui/material";
 import React, { useEffect, useState } from "react";
@@ -5,9 +7,6 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 
 const UpdateProductModal = ({ product }: { product: ProductProps }) => {
-//   useEffect(() => {
-//     getMyAssets().then((res) => {});
-//   }, []);
   const style = {
     position: "absolute" as "absolute",
     top: "50%",
@@ -28,19 +27,19 @@ const UpdateProductModal = ({ product }: { product: ProductProps }) => {
     formState: { errors },
   } = useForm<ProductProps>();
 
-//   const onSubmit: SubmitHandler<ProductProps> = (data) =>
-    // updateOffer(offer.id, offer.Crypto.id, data.amount)
-    //   .then((res) => {
-    //     if (res.status !== undefined) {
-    //       toast.success("Crypto Updated !");
-    //       handleClose();
-    //       return;
-    //     } else {
-    //       toast.error(res.response.data.message);
-    //       handleClose();
-    //     }
-    //   })
-    //   .catch((e) => toast.error(e));
+  const onSubmit: SubmitHandler<ProductProps> = (data) =>
+    updateProduct(product.id, data)
+      .then((res) => {
+        if (res.status !== undefined) {
+          toast.success("Product Updated !");
+          handleClose();
+          return;
+        } else {
+          toast.error(res.response.data.message);
+          handleClose();
+        }
+      })
+      .catch((e) => toast.error(e));
 
   return (
     <div>
@@ -71,43 +70,100 @@ const UpdateProductModal = ({ product }: { product: ProductProps }) => {
         aria-describedby="modal-modal-description"
       >
         <Box sx={style}>
-          <p className="flex justify-center">Update this offer</p>
-          <form
-            // onSubmit={handleSubmit(onSubmit)}
-            className="w-full flex flex-col gap-4"
-          >
-            <div className="flex items-start flex-col justify-start">
-              <label
-                htmlFor="amount"
-                className="text-sm text-gray-700 dark:text-black mr-2"
-              >
-                Amount:
-              </label>
-              <input
-                type="number"
-                id="amount"
-                // max={offer.amount}
-                className="w-full px-3 dark:text-black dark:bg-white py-2 rounded-md border border-gray-300 dark:border-gray-700 focus:outline-none focus:ring-1 focus:ring-blue-500"
-                // {...register("amount", {
-                //   valueAsNumber: true,
-                //   required: true,
-                // })}
-              />{" "}
-            </div>
-            <div className="flex items-center">
-              <button
-                onClick={handleClose}
-                className="bg-red-400 text-white rounded-md text-center w-32 p-2 m-4 "
-              >
-                Cancel
-              </button>
-              <input
-                type="submit"
-                className="bg-green-700 cursor-pointer text-white rounded-md text-center w-32 p-2 m-4 "
-                value="Update"
-              />
-            </div>
-          </form>
+          <div className="flex items-center">
+            <form
+              onSubmit={handleSubmit(onSubmit)}
+              className="w-full flex flex-col gap-3"
+            >
+              <h1 className="text-xl font-bold text-center text-gray-700 dark:text-black">
+                Udpate product
+              </h1>
+              <div className="flex items-start flex-col justify-start">
+                <label
+                  htmlFor="name"
+                  className="text-sm text-gray-700 dark:text-black mr-2"
+                >
+                  Name:
+                </label>
+                <input
+                  type="text"
+                  id="name"
+                  defaultValue={product.name}
+                  className="w-full px-3 dark:text-black dark:bg-white py-2 rounded-md border border-gray-300 dark:border-gray-700 focus:outline-none focus:ring-1 focus:ring-blue-500"
+                  {...register("name", { required: true })}
+                />
+                {errors.name && <ErrorMsg error={"Name"} />}
+              </div>
+              <div className="flex items-start flex-col justify-start">
+                <label
+                  htmlFor="description"
+                  className="text-sm text-gray-700 dark:text-black mr-2"
+                >
+                  Description:
+                </label>
+                <input
+                  type="text"
+                  id="description"
+                  defaultValue={product.description}
+                  className="w-full px-3 dark:text-black dark:bg-white py-2 rounded-md border border-gray-300 dark:border-gray-700 focus:outline-none focus:ring-1 focus:ring-blue-500"
+                  {...register("description", {
+                    required: true,
+                  })}
+                />{" "}
+                {errors.description && <ErrorMsg error={"Value"} />}
+              </div>
+              <div className="flex items-start flex-col justify-start">
+                <label
+                  htmlFor="stock"
+                  className="text-sm text-gray-700 dark:text-black mr-2"
+                >
+                  stock:
+                </label>
+                <input
+                  type="number"
+                  id="stock"
+                  defaultValue={product.stock}
+                  className="w-full px-3 dark:text-black dark:bg-white py-2 rounded-md border border-gray-300 dark:border-gray-700 focus:outline-none focus:ring-1 focus:ring-blue-500"
+                  {...register("stock", {
+                    valueAsNumber: true,
+                    required: true,
+                  })}
+                />
+                {errors.stock && <ErrorMsg error={"stock"} />}
+              </div>
+              <div className="flex items-start flex-col justify-start">
+                <label
+                  htmlFor="price"
+                  className="text-sm text-gray-700 dark:text-black mr-2"
+                >
+                  Price:
+                </label>
+                <input
+                  id="price"
+                  defaultValue={product.price}
+                  className="w-full px-3 dark:text-black dark:bg-white py-2 rounded-md border border-gray-300 dark:border-gray-700 focus:outline-none focus:ring-1 focus:ring-blue-500"
+                  {...register("price", {
+                    valueAsNumber: true,
+                  })}
+                />
+                {errors.price && <ErrorMsg error={"price"} />}
+              </div>
+
+              <div className="flex items-center">
+                <button
+                  onClick={handleClose}
+                  className="bg-red-400 text-white rounded-md text-center w-32 p-2 m-4 "
+                >
+                  Cancel
+                </button>
+                <input
+                  type="submit"
+                  className="bg-green-700 cursor-pointer text-white rounded-md text-center w-32 p-2 m-4 "
+                  value="Update"
+                />
+              </div>
+            </form>
+          </div>
         </Box>
       </Modal>
     </div>

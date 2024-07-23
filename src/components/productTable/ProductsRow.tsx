@@ -3,6 +3,7 @@ import { ProductProps } from "@/utils/types";
 import React from "react";
 import Image from "next/image";
 import DeleteProductModal from "../modals/product/DeleteProductModal";
+import UpdateProductModal from "../modals/product/UpdateProductModal";
 
 const ProductsRow = ({ product }: { product: ProductProps }) => {
   const role = isAdmin();
@@ -38,8 +39,7 @@ const ProductsRow = ({ product }: { product: ProductProps }) => {
       <td className="py-3 px-6 text-center">
         {role ? (
           <div className="flex item-center justify-center">
-            bouton
-            {/* <EditOfferModal offer={offer} amount={offer.amount} /> */}
+            <UpdateProductModal product={product} />
             <DeleteProductModal product={product} />
           </div>
         ) : (

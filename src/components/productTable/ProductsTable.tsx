@@ -19,13 +19,12 @@ const ProductsTable = () => {
   }, []);
 
   return (
-    <div className="bg-white shadow rounded-lg p-4 mb-4 sm:p-6 xl:p-8 ">
-      <div className="mb-4 flex items-center justify-between">
-        <div>
+    <div className="bg-white overflow-auto shadow rounded-lg p-4 mb-4 sm:p-6 xl:p-8 ">
+      <div className="mb-4flex items-center justify-between">
+        <div className="flex justify-between items-center w-full">
           <h3 className="text-xl font-bold text-gray-900 mb-2">All Products</h3>
-          <span className="text-base font-normal text-gray-500">
+          <span className="text-base pb-3 font-normal text-gray-500">
             <CreateProductModal />
-            {/* This is a list of all crypto selling by users */}
           </span>
         </div>
       </div>
@@ -37,8 +36,8 @@ const ProductsTable = () => {
                 <th className="py-3 px-6 w-10 text-left">Product</th>
                 <th className="py-3 px-6 w-96 text-left">Description</th>
                 <th className="py-3 px-6 w-10 text-center">Stock</th>
-                <th className="py-3 px-6 w-10 text-center">Price</th>
-                <th className="py-3 px-6 w-10 text-center">Actions</th>
+                <th className="py-3 px-6 w-18 lg:w-10 text-center">Price</th>
+                <th className="py-3 px-6 w-8 text-center">Actions</th>
               </tr>
             </thead>
             <tbody className="text-gray-600 text-sm font-light">

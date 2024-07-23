@@ -36,3 +36,21 @@ export async function login(user: LoginProps) {
       return e;
     });
 }
+
+export async function validateAccount(token:string) {
+  const url =  `${process.env.NEXT_PUBLIC_API_URL}auth/validate/${token}`
+  const axiosConfig = {
+    headers: {
+      "content-type": "application/json",
+    },
+  };
+  return axios
+    .get(url, axiosConfig)
+    .then((res) => {
+      return res;
+    })
+    .catch((e) => {
+      return e;
+    });
+}
+

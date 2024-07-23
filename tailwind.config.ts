@@ -13,8 +13,7 @@ const config: Config = {
         "gradient-conic":
           "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
       },
-      game:
-        "url(https://luckyfalconcomputers.com/wp-content/uploads/2024/02/How-AI-In-Gaming-Is-Redefining-The-Future-Of-the-Industry.jpg)",
+      game: "url('https://images.unsplash.com/photo-1499336315816-097655dcfbda?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=crop&amp;w=2710&amp;q=80')",
     },
   },
   plugins: [],

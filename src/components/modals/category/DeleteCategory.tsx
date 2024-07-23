@@ -1,11 +1,12 @@
+import { deleteCategory } from '@/services/category';
 import { deleteProduct } from '@/services/product';
-import { ProductProps } from '@/utils/types';
+import { CategoryProps, ProductProps } from '@/utils/types';
 import { Tooltip, Modal, Box } from '@mui/material';
 import React, { useState } from 'react'
 import toast from 'react-hot-toast';
 
-const DeleteProductModal = ({product}:{ product: ProductProps}) => {
-    const productId = product.id
+const DeleteCategoryModal = ({category}:{ category: CategoryProps}) => {
+    const categoryId = category.id
     const style = {
         position: "absolute" as "absolute",
         top: "50%",
@@ -21,14 +22,14 @@ const DeleteProductModal = ({product}:{ product: ProductProps}) => {
       const handleClose = () => setOpen(false);
     
       function HandleDeleteOffer() {
-        deleteProduct(productId)
+        deleteCategory(categoryId)
           .then((res) => {
-            if (res.status !== undefined) {
+            if (res.status === 200) {
               handleClose();
               toast.success("Successfully deleted");
               return;
             }
-            // toast.error(res.response.data.message);
+            toast.error(res.response.data.message[0]);
             handleClose();
           })
           .catch((e) => toast.error(e));
@@ -36,7 +37,7 @@ const DeleteProductModal = ({product}:{ product: ProductProps}) => {
     
       return (
         <div>
-          <Tooltip title="Delete this product">
+          <Tooltip title="Delete this category">
             <button
               onClick={handleOpen}
               className="w-4 mr-2 transform hover:text-purple-500 hover:scale-110"
@@ -63,7 +64,7 @@ const DeleteProductModal = ({product}:{ product: ProductProps}) => {
             aria-describedby="modal-modal-description"
           >
             <Box sx={style}>
-              <p className="flex justify-center">Confirm Delete this product ?</p>
+              <p className="flex justify-center">Confirm Delete this category ?</p>
               <div className="flex items-center">
                 <button
                   onClick={handleClose}
@@ -86,4 +87,4 @@ const DeleteProductModal = ({product}:{ product: ProductProps}) => {
       );
 }
 
-export default DeleteProductModal
+export default DeleteCategoryModal

@@ -1,7 +1,15 @@
-import React from "react";
+import Carousel from "@/components/carousel/Carousel";
+import UsersTable from "@/components/userTable/UserTable";
+import { validateAccount } from "@/services/auth";
+import React, { useEffect } from "react";
 
 const page = () => {
-  return <div></div>;
+  return (
+    <>
+    
+      <Carousel />
+    </>
+  );
 };
 
 export default page;

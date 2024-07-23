@@ -17,7 +17,8 @@ const LoginForm = () => {
   const onSubmit: SubmitHandler<LoginProps> = (data) =>
     login(data)
       .then((res: any) => {
-        if (res.status !== undefined) {
+        if (res.status === 201) {
+
           toast.success("Login successfull");
           window.localStorage.setItem("token", res.data.token.access_token);
           window.localStorage.setItem("role", res.data.role);
