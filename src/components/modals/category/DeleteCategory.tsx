@@ -21,7 +21,7 @@ const DeleteCategoryModal = ({category}:{ category: CategoryProps}) => {
       const handleOpen = () => setOpen(true);
       const handleClose = () => setOpen(false);
     
-      function HandleDeleteOffer() {
+      function HandleDeleteCategory() {
         deleteCategory(categoryId)
           .then((res) => {
             if (res.status === 200) {
@@ -75,7 +75,7 @@ const DeleteCategoryModal = ({category}:{ category: CategoryProps}) => {
                 <button
                   className="bg-green-700 text-white rounded-md text-center w-32 p-2 m-4 "
                   onClick={() => {
-                    HandleDeleteOffer();
+                    HandleDeleteCategory();
                   }}
                 >
                   Delete

@@ -25,13 +25,12 @@ const DeleteUserModal = ({ user }: { user: UserProps }) => {
   function HandleDeleteUser() {
     deleteUser(userId)
       .then((res) => {
-
-        // if (res.status !== undefined) {
-        //   handleClose();
-        //   toast.success("Successfully deleted");
-        //   return;
-        // }
-        // toast.error(res.response.data.message);
+        if (res.status === 200) {
+          handleClose();
+          toast.success("Successfully deleted");
+          return;
+        }
+        toast.error(res.response.data.message);
         handleClose();
       })
       .catch((e) => toast.error(e));
@@ -39,7 +38,7 @@ const DeleteUserModal = ({ user }: { user: UserProps }) => {
 
   return (
     <div>
-      <Tooltip title="Delete this product">
+      <Tooltip title="Delete user account">
         <button
           onClick={handleOpen}
           className="w-4 mr-2 transform hover:text-purple-500 hover:scale-110"

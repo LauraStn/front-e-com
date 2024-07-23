@@ -45,7 +45,7 @@ const UpdateCategoryModal = ({ category }: { category: CategoryProps }) => {
 
   return (
     <div>
-      <Tooltip title="Edit this offer">
+      <Tooltip title="Update this category">
         <button
           onClick={handleOpen}
           className="w-4 mr-2 transform hover:text-purple-500 hover:scale-110"
